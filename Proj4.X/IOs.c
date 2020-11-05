@@ -117,5 +117,5 @@ void __attribute__((interrupt, no_auto_psv))_CNInterrupt(void) {
         IEC1bits.CNIE = 1;      // turn CN interrupt back on
         IFS1bits.CNIF = 0;      // reset interrupt flag
     }
-    
+    Nop();
 }
