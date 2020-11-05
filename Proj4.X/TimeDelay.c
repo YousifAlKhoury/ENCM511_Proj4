@@ -14,6 +14,9 @@ void delay_ms (uint16_t time_ms) {
     //T2CON = 0x8000;       //alternate way to set T2CON bits
     
     IFS0bits.T2IF=0;        //Clear timer 2 interrupt flag
+    IEC0bits.T2IE = 1;      //enable timer interrupt
+    
+    IPC1bits.T2IP = 0b111;      //set priority level
     
     PR2 = time_ms*2;        //PR2 = time/(prescaler*(2/fclk)*1000)
  
@@ -27,5 +30,6 @@ void __attribute__((interrupt, no_auto_psv))_T2Interrupt(void)
     IFS0bits.T2IF=0;        //Clear timer 2 interrupt flag
     T2CONbits.TON=0;
     TMR2 = 0;               //clear TMR2
+    NewClk(500);
     //TMR2flag = 1;         // global variable created by user
 }
